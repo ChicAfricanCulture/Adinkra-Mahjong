@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adinkra Mahjong - Cultural Matching Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a3a, #0d1b2a);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: #f9a826;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b8c7d6;
+        }
+        
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .board-container {
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-height: 500px;
+        }
+        
+        .info-panel {
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            background: rgba(26, 42, 58, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f9a826;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #b8c7d6;
+        }
+        
+        .symbol-info {
+            background: rgba(26, 42, 58, 0.6);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .symbol-name {
+            font-size: 1.2rem;
+            color: #f9a826;
+            margin-bottom: 8px;
+        }
+        
+        .symbol-meaning {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #b8c7d6;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #f9a826, #e8951e);
+            color: #1a2a3a;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(249, 168, 38, 0.4);
+        }
+        
+        .mahjong-board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
+            justify-items: center;
+        }
+        
+        .tile {
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(145deg, #2c3e50, #1a252f);
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+            font-size: 1.5rem;
+            color: #f9a826;
+        }
+        
+        .tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .tile.selected {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(249, 168, 38, 0.7);
+            border: 2px solid #f9a826;
+        }
+        
+        .tile.matched {
+            visibility: hidden;
+        }
+        
+        .instructions {
+            background: rgba(13, 27, 42, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        h2 {
+            color: #f9a826;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .instructions p {
+            margin-bottom: 12px;
+            line-height: 1.5;
+            color: #b8c7d6;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 6px;
+            color: #b8c7d6;
+            line-height: 1.4;
+        }
+        
+        .win-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 27, 42, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .win-message h2 {
+            font-size: 2.5rem;
+            color: #f9a826;
+            margin-bottom: 20px;
+        }
+        
+        .win-message p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: #b8c7d6;
+            max-width: 500px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+            
+            .mahjong-board {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .tile {
+                width: 50px;
+                height: 70px;
+                font-size: 1.3rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Adinkra Mahjong</h1>
+            <p class="subtitle">Match the symbols and discover their meanings</p>
+        </header>
+        
+        <div class="game-area">
+            <div class="board-container">
+                <div class="mahjong-board" id="board"></div>
+            </div>
+            
+            <div class="info-panel">
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="matches">0</div>
+                        <div class="stat-label">Matches</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="remaining">40</div>
+                        <div class="stat-label">Remaining</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="time">00:00</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                </div>
+                
+                <div class="symbol-info">
+                    <div class="symbol-name" id="symbol-name">Select a tile</div>
+                    <div class="symbol-meaning" id="symbol-meaning">Click on any tile to see its meaning</div>
+                </div>
+                
+                <div class="controls">
+                    <button id="hint-btn">Hint</button>
+                    <button id="shuffle-btn">Shuffle</button>
+                    <button id="reset-btn">New Game</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>How to Play Adinkra Mahjong</h2>
+            <p>Match identical Adinkra symbols to clear the board and learn about Ghanaian cultural symbols.</p>
+            
+            <ul>
+                <li><strong>Match Tiles:</strong> Click on two identical symbols to remove them</li>
+                <li><strong>Learn Meanings:</strong> Each symbol has cultural significance</li>
+                <li><strong>Win Condition:</strong> Clear all 40 tiles to win</li>
+                <li><strong>Use Hints:</strong> Get help finding matches</li>
+            </ul>
+            
+            <p>Adinkra symbols are visual representations from the Akan people of Ghana, representing proverbs and philosophical concepts.</p>
+        </div>
+    </div>
+    
+    <div class="win-message hidden" id="win-message">
+        <h2>Congratulations!</h2>
+        <p>You've matched all the Adinkra symbols and learned about their cultural significance!</p>
+        <button id="play-again-btn">Play Again</button>
+    </div>
+
+    <script>
+        // Adinkra symbols data
+        const adinkraSymbols = [
+            { id: 1, name: "Gye Nyame", meaning: "Except for God. Symbol of the supremacy of God." },
+            { id: 2, name: "Sankofa", meaning: "Go back and fetch it. Symbol of learning from the past." },
+            { id: 3, name: "Adinkrahene", meaning: "King of the Adinkra symbols. Symbol of greatness and leadership." },
+            { id: 4, name: "Dwennimmen", meaning: "Ram's horns. Symbol of humility together with strength." },
+            { id: 5, name: "Akoma", meaning: "The heart. Symbol of patience, tolerance, and love." },
+            { id: 6, name: "Nsoromma", meaning: "Child of the heavens. Symbol of faith." },
+            { id: 7, name: "Osram Ne Nsoromma", meaning: "The moon and the star. Symbol of love and harmony." },
+            { id: 8, name: "Akofena", meaning: "Sword of war. Symbol of courage and valor." },
+            { id: 9, name: "Epa", meaning: "Handcuffs. Symbol of law and justice." },
+            { id: 10, name: "Fihankra", meaning: "Circle of house. Symbol of security and brotherhood." }
+        ];
+
+        // Game state
+        let gameState = {
+            tiles: [],
+            selectedTile: null,
+            matches: 0,
+            remaining: 40,
+            startTime: null,
+            timerInterval: null,
+            elapsedTime: 0
+        };
+
+        // DOM elements
+        const boardElement = document.getElementById('board');
+        const matchesElement = document.getElementById('matches');
+        const remainingElement = document.getElementById('remaining');
+        const timeElement = document.getElementById('time');
+        const symbolNameElement = document.getElementById('symbol-name');
+        const symbolMeaningElement = document.getElementById('symbol-meaning');
+        const hintButton = document.getElementById('hint-btn');
+        const shuffleButton = document.getElementById('shuffle-btn');
+        const resetButton = document.getElementById('reset-btn');
+        const playAgainButton = document.getElementById('play-again-btn');
+        const winMessage = document.getElementById('win-message');
+
+        // Initialize the game
+        function initGame() {
+            createTiles();
+            renderBoard();
+            startTimer();
+            
+            // Add event listeners
+            hintButton.addEventListener('click', provideHint);
+            shuffleButton.addEventListener('click', shuffleTiles);
+            resetButton.addEventListener('click', resetGame);
+            playAgainButton.addEventListener('click', resetGame);
+        }
+
+        // Create tiles for the game
+        function createTiles() {
+            gameState.tiles = [];
+            
+            // Create pairs of each symbol (4 of each for 40 total)
+            const symbols = [...adinkraSymbols, ...adinkraSymbols, ...adinkraSymbols, ...adinkraSymbols];
+            
+            // Shuffle the symbols
+            for (let i = symbols.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
+            }
+            
+            // Create tile objects
+            for (let i = 0; i < 40; i++) {
+                gameState.tiles.push({
+                    id: i,
+                    symbol: symbols[i],
+                    matched: false,
+                    selected: false
+                });
+            }
+            
+            gameState.matches = 0;
+            gameState.remaining = 40;
+            updateStats();
+        }
+
+        // Render the game board
+        function renderBoard() {
+            boardElement.innerHTML = '';
+            
+            gameState.tiles.forEach(tile => {
+                const tileElement = document.createElement('div');
+                tileElement.className = 'tile';
+                if (tile.matched) {
+                    tileElement.classList.add('matched');
+                } else if (tile.selected) {
+                    tileElement.classList.add('selected');
+                }
+                
+                // Use simple geometric symbols
+                tileElement.textContent = getSymbolCharacter(tile.symbol.id);
+                tileElement.addEventListener('click', () => selectTile(tile));
+                
+                boardElement.appendChild(tileElement);
+            });
+        }
+
+        // Get symbol character
+        function getSymbolCharacter(id) {
+            const symbols = ['●', '◆', '■', '▲', '★', '☀', '☽', '♠', '♣', '♥'];
+            return symbols[id % symbols.length];
+        }
+
+        // Handle tile selection
+        function selectTile(tile) {
+            if (tile.matched || tile.selected) return;
+            
+            if (!gameState.selectedTile) {
+                // First tile selection
+                tile.selected = true;
+                gameState.selectedTile = tile;
+                showSymbolInfo(tile.symbol);
+                renderBoard();
+            } else {
+                // Second tile selection - check for match
+                if (gameState.selectedTile.symbol.id === tile.symbol.id) {
+                    // Match found
+                    gameState.selectedTile.matched = true;
+                    tile.matched = true;
+                    gameState.matches++;
+                    gameState.remaining -= 2;
+                    
+                    if (gameState.remaining === 0) {
+                        endGame();
+                    }
+                }
+                
+                // Reset selection
+                gameState.selectedTile.selected = false;
+                gameState.selectedTile = null;
+                renderBoard();
+                updateStats();
+            }
+        }
+
+        // Show symbol information
+        function showSymbolInfo(symbol) {
+            symbolNameElement.textContent = symbol.name;
+            symbolMeaningElement.textContent = symbol.meaning;
+        }
+
+        // Update game statistics
+        function updateStats() {
+            matchesElement.textContent = gameState.matches;
+            remainingElement.textContent = gameState.remaining;
+        }
+
+        // Start the game timer
+        function startTimer() {
+            gameState.startTime = new Date();
+            clearInterval(gameState.timerInterval);
+            
+            gameState.timerInterval = setInterval(() => {
+                const now = new Date();
+                gameState.elapsedTime = Math.floor((now - gameState.startTime) / 1000);
+                
+                const minutes = Math.floor(gameState.elapsedTime / 60);
+                const seconds = gameState.elapsedTime % 60;
+                
+                timeElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Provide a hint
+        function provideHint() {
+            const availableMatches = findAvailableMatches();
+            if (availableMatches.length > 0) {
+                const match = availableMatches[0];
+                flashTiles([match[0], match[1]]);
+            }
+        }
+
+        // Find available matches
+        function findAvailableMatches() {
+            const matches = [];
+            const unmatchedTiles = gameState.tiles.filter(tile => !tile.matched);
+            
+            for (let i = 0; i < unmatchedTiles.length; i++) {
+                for (let j = i + 1; j < unmatchedTiles.length; j++) {
+                    if (unmatchedTiles[i].symbol.id === unmatchedTiles[j].symbol.id) {
+                        matches.push([unmatchedTiles[i], unmatchedTiles[j]]);
+                    }
+                }
+            }
+            
+            return matches;
+        }
+
+        // Flash tiles for hint
+        function flashTiles(tiles) {
+            tiles.forEach(tile => {
+                tile.selected = true;
+            });
+            
+            renderBoard();
+            
+            setTimeout(() => {
+                tiles.forEach(tile => {
+                    tile.selected = false;
+                });
+                renderBoard();
+            }, 1000);
+        }
+
+        // Shuffle tiles
+        function shuffleTiles() {
+            if (gameState.selectedTile) {
+                gameState.selectedTile.selected = false;
+                gameState.selectedTile = null;
+            }
+            
+            const unmatchedTiles = gameState.tiles.filter(tile => !tile.matched);
+            const matchedTiles = gameState.tiles.filter(tile => tile.matched);
+            
+            for (let i = unmatchedTiles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [unmatchedTiles[i], unmatchedTiles[j]] = [unmatchedTiles[j], unmatchedTiles[i]];
+            }
+            
+            gameState.tiles = [...unmatchedTiles, ...matchedTiles];
+            renderBoard();
+        }
+
+        // Reset game
+        function resetGame() {
+            clearInterval(gameState.timerInterval);
+            winMessage.classList.add('hidden');
+            initGame();
+        }
+
+        // End game
+        function endGame() {
+            clearInterval(gameState.timerInterval);
+            winMessage.classList.remove('hidden');
+        }
+
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
