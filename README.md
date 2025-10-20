@@ -3,7 +3,7 @@
 A cultural matching game that combines traditional Mahjong gameplay with Ghanaian Adinkra symbols and their meanings.
 
 ## Live Demo
-https://yourusername.github.io/adinkra-mahjong/
+https://Adinkra-Mahjong.github.io/adinkra-mahjong/
 
 ## About
 Adinkra Mahjong is an educational puzzle game that introduces players to traditional Adinkra symbols from Ghanaian culture. Each symbol carries deep cultural meaning from Akan proverbs and philosophical ideas.
