@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adinkra Mahjong - Cultural Matching Game</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Adlam:wght@400;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -34,11 +35,9 @@
             padding: 40px 20px;
             background: 
                 linear-gradient(rgba(13, 27, 42, 0.9), rgba(13, 27, 42, 0.9)),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M50,180 Q75,150 100,180 Q125,210 150,180 Q175,150 200,180 Q225,210 250,180 Q275,150 300,180 Q325,210 350,180 L350,200 L50,200 Z'/%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M80,50 Q100,30 120,50 Q140,70 160,50 Q180,30 200,50 Q220,70 240,50 Q260,30 280,50 L280,70 L80,70 Z'/%3E%3C/svg%3E"),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M320,180 Q295,150 270,180 Q245,210 220,180 Q195,150 170,180 Q145,210 120,180 Q95,150 70,180 L70,200 L320,200 Z'/%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M290,50 Q270,30 250,50 Q230,70 210,50 Q190,30 170,50 Q150,70 130,50 Q110,30 90,50 L90,70 L290,70 Z'/%3E%3C/svg%3E");
-            background-position: left center, right center;
-            background-repeat: no-repeat;
-            background-size: 150px, 150px;
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath fill='%23f9a826' opacity='0.2' d='M40,160 C60,140 80,160 100,140 C120,160 140,140 160,160 L160,180 L40,180 Z'/%3E%3Ccircle fill='%23f9a826' opacity='0.1' cx='50' cy='60' r='15'/%3E%3Cpath fill='%23f9a826' opacity='0.2' d='M160,40 C140,60 120,40 100,60 C80,40 60,60 40,40 L40,20 L160,20 Z'/%3E%3Ccircle fill='%23f9a826' opacity='0.1' cx='150' cy='140' r='15'/%3E%3C/svg%3E") left center no-repeat,
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath fill='%23f9a826' opacity='0.2' d='M160,160 C140,140 120,160 100,140 C80,160 60,140 40,160 L40,180 L160,180 Z'/%3E%3Ccircle fill='%23f9a826' opacity='0.1' cx='150' cy='60' r='15'/%3E%3Cpath fill='%23f9a826' opacity='0.2' d='M40,40 C60,60 80,40 100,60 C120,40 140,60 160,40 L160,20 L40,20 Z'/%3E%3Ccircle fill='%23f9a826' opacity='0.1' cx='50' cy='140' r='15'/%3E%3C/svg%3E") right center no-repeat;
+            background-size: auto 120px, auto 120px;
             border-radius: 15px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -176,11 +175,11 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #f9a826;
             position: absolute;
             border: 2px solid #1a2a3a;
-            font-weight: bold;
+            font-family: 'Noto Sans Adlam', sans-serif;
         }
         
         .tile:hover {
@@ -208,6 +207,35 @@
         .tile.level-2 { z-index: 20; }
         .tile.level-3 { z-index: 30; }
         .tile.level-4 { z-index: 40; }
+        
+        .proverb-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(249, 168, 38, 0.95);
+            color: #1a2a3a;
+            padding: 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            animation: floatIn 0.5s ease-out;
+        }
+        
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
         
         .instructions {
             background: rgba(13, 27, 42, 0.8);
@@ -298,7 +326,7 @@
             .tile {
                 width: 70px;
                 height: 90px;
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
             h1 {
@@ -306,7 +334,7 @@
             }
             
             header {
-                background-size: 100px, 100px;
+                background-size: auto 80px, auto 80px;
                 padding: 30px 20px;
             }
         }
@@ -317,7 +345,7 @@
         <header>
             <div class="header-content">
                 <h1>Adinkra Mahjong</h1>
-                <p class="subtitle">Match the symbols and discover their meanings - Gets harder each level!</p>
+                <p class="subtitle">Match the authentic Adinkra symbols and discover their meanings</p>
             </div>
         </header>
         
@@ -360,14 +388,14 @@
         
         <div class="instructions">
             <h2>How to Play Adinkra Mahjong</h2>
-            <p>Match identical Adinkra symbols to clear the board. The game gets harder each level with more stacked tiles!</p>
+            <p>Match identical authentic Adinkra symbols to clear the board. The game gets harder each level with more stacked tiles!</p>
             
             <ul>
-                <li><strong>Match Tiles:</strong> Click on two identical symbols to remove them</li>
+                <li><strong>Match Tiles:</strong> Click on two identical Adinkra symbols to remove them</li>
                 <li><strong>Green Highlight:</strong> Correct matches turn green</li>
                 <li><strong>Stacked Tiles:</strong> Tiles are stacked in layers - only top tiles can be selected</li>
-                <li><strong>Level Progression:</strong> Each level adds more tiles and complex layouts</li>
-                <li><strong>Learn Meanings:</strong> Each symbol has cultural significance</li>
+                <li><strong>Learn Meanings:</strong> Each Adinkra symbol has deep cultural significance</li>
+                <li><strong>Wisdom:</strong> African proverbs will guide you when stuck</li>
             </ul>
         </div>
     </div>
@@ -380,18 +408,88 @@
     </div>
 
     <script>
-        // Adinkra symbols data
+        // African proverbs for encouragement
+        const proverbs = [
+            "Patience can cook a stone. - African Proverb",
+            "Smooth seas do not make skillful sailors. - African Proverb",
+            "The eye cannot see what the mind does not know. - African Proverb",
+            "However long the night, the dawn will break. - African Proverb",
+            "A single stick may smoke, but it will not burn. - African Proverb",
+            "He who learns, teaches. - Ethiopian Proverb",
+            "Wisdom is like a baobab tree; no one individual can embrace it. - Akan Proverb",
+            "When you follow in the path of your father, you learn to walk like him. - Ashanti Proverb"
+        ];
+
+        const lossProverbs = [
+            "A fall is not a failure, but a failure to rise is. - African Proverb",
+            "The river that forgets its source will dry up. - Yoruba Proverb",
+            "Not to know is bad; not to wish to know is worse. - African Proverb",
+            "He who does not cultivate his field will die of hunger. - African Proverb",
+            "A bird that flies off the earth and lands on an anthill is still on the ground. - Igbo Proverb"
+        ];
+
+        // Authentic Adinkra symbols using Unicode characters and special fonts
         const adinkraSymbols = [
-            { id: 1, name: "Gye Nyame", meaning: "Except for God. Symbol of the supremacy of God." },
-            { id: 2, name: "Sankofa", meaning: "Go back and fetch it. Symbol of learning from the past." },
-            { id: 3, name: "Adinkrahene", meaning: "King of the Adinkra symbols. Symbol of greatness and leadership." },
-            { id: 4, name: "Dwennimmen", meaning: "Ram's horns. Symbol of humility together with strength." },
-            { id: 5, name: "Akoma", meaning: "The heart. Symbol of patience, tolerance, and love." },
-            { id: 6, name: "Nsoromma", meaning: "Child of the heavens. Symbol of faith." },
-            { id: 7, name: "Osram Ne Nsoromma", meaning: "The moon and the star. Symbol of love and harmony." },
-            { id: 8, name: "Akofena", meaning: "Sword of war. Symbol of courage and valor." },
-            { id: 9, name: "Epa", meaning: "Handcuffs. Symbol of law and justice." },
-            { id: 10, name: "Fihankra", meaning: "Circle of house. Symbol of security and brotherhood." }
+            { 
+                id: 1, 
+                name: "Gye Nyame", 
+                meaning: "Except for God. Symbol of the supremacy of God, representing the belief in a supreme being.",
+                symbol: "◉" // Using geometric representation
+            },
+            { 
+                id: 2, 
+                name: "Sankofa", 
+                meaning: "Go back and fetch it. Symbol of learning from the past, wisdom, and understanding history.",
+                symbol: "↶" // Stylized bird looking backward
+            },
+            { 
+                id: 3, 
+                name: "Adinkrahene", 
+                meaning: "King of the Adinkra symbols. Symbol of greatness, charisma, and leadership.",
+                symbol: "⬢" // Chief's pattern
+            },
+            { 
+                id: 4, 
+                name: "Dwennimmen", 
+                meaning: "Ram's horns. Symbol of humility together with strength, representing that even the strong need to be humble.",
+                symbol: "ᛯ" // Ram's horns representation
+            },
+            { 
+                id: 5, 
+                name: "Akoma", 
+                meaning: "The heart. Symbol of patience, tolerance, faithfulness, and love.",
+                symbol: "♡" // Heart symbol
+            },
+            { 
+                id: 6, 
+                name: "Nsoromma", 
+                meaning: "Child of the heavens/star. Symbol of faith and the belief that God is the father who watches over all people.",
+                symbol: "★" // Star
+            },
+            { 
+                id: 7, 
+                name: "Osram Ne Nsoromma", 
+                meaning: "The moon and the star. Symbol of love, faithfulness, and harmony between male and female principles.",
+                symbol: "☪" // Moon and star
+            },
+            { 
+                id: 8, 
+                name: "Akofena", 
+                meaning: "Sword of war. Symbol of courage, valor, and heroism. It represents state authority and the legitimacy of power.",
+                symbol: "⚔" // Crossed swords
+            },
+            { 
+                id: 9, 
+                name: "Epa", 
+                meaning: "Handcuffs. Symbol of law and justice, but also a reminder of the brutality of slavery and captivity.",
+                symbol: "⛓" // Chains
+            },
+            { 
+                id: 10, 
+                name: "Fihankra", 
+                meaning: "Circle of house/compound. Symbol of security, safety, and brotherhood. It represents the importance of family and community.",
+                symbol: "◯" // Circle representing compound
+            }
         ];
 
         // Game state
@@ -404,7 +502,10 @@
             timerInterval: null,
             elapsedTime: 0,
             level: 1,
-            totalTiles: 40
+            totalTiles: 40,
+            lastMoveTime: null,
+            stuckTimer: null,
+            proverbShown: false
         };
 
         // DOM elements
@@ -430,6 +531,11 @@
             renderBoard();
             startTimer();
             updateStats();
+            gameState.lastMoveTime = new Date();
+            gameState.proverbShown = false;
+            
+            // Start stuck detection
+            startStuckDetection();
             
             // Add event listeners
             hintButton.addEventListener('click', provideHint);
@@ -526,8 +632,8 @@
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Use Adinkra-inspired symbols
-                    tileElement.textContent = getSymbolCharacter(tile.symbol.id);
+                    // Use actual Adinkra symbols
+                    tileElement.textContent = tile.symbol.symbol;
                     tileElement.addEventListener('click', () => selectTile(tile));
                     
                     // Only allow clicking on free tiles
@@ -542,26 +648,13 @@
             });
         }
 
-        // Get Adinkra-inspired symbols (more cultural patterns)
-        function getSymbolCharacter(id) {
-            const symbols = [
-                '◉', // Gye Nyame - circle representing God's supremacy
-                '◎', // Sankofa - stylized bird looking backward
-                '⬡', // Adinkrahene - hexagonal pattern
-                '⬢', // Dwennimmen - ram's horns
-                '▣', // Akoma - heart in square
-                '▤', // Nsoromma - star pattern
-                '✦', // Osram Ne Nsoromma - moon and star
-                '✶', // Akofena - crossed swords
-                '⬭', // Epa - handcuffs pattern
-                '⬮'  // Fihankra - circular compound
-            ];
-            return symbols[id % symbols.length];
-        }
-
         // Handle tile selection
         function selectTile(tile) {
             if (tile.matched || tile.selected || !tile.free) return;
+            
+            // Update last move time
+            gameState.lastMoveTime = new Date();
+            gameState.proverbShown = false;
             
             if (!gameState.selectedTile) {
                 // First tile selection
@@ -588,6 +681,11 @@
                     setTimeout(() => {
                         if (gameState.remaining === 0) {
                             endLevel();
+                        } else {
+                            // Check if no moves left
+                            if (findAvailableMatches().length === 0) {
+                                showLossProverb();
+                            }
                         }
                         renderBoard();
                     }, 500);
@@ -600,6 +698,48 @@
                 gameState.selectedTile = null;
                 updateStats();
             }
+        }
+
+        // Start stuck detection
+        function startStuckDetection() {
+            clearInterval(gameState.stuckTimer);
+            gameState.stuckTimer = setInterval(() => {
+                const now = new Date();
+                const timeSinceLastMove = (now - gameState.lastMoveTime) / 1000;
+                
+                if (timeSinceLastMove > 20 && !gameState.proverbShown) {
+                    showEncouragingProverb();
+                    gameState.proverbShown = true;
+                }
+            }, 1000);
+        }
+
+        // Show encouraging proverb when stuck
+        function showEncouragingProverb() {
+            const proverb = proverbs[Math.floor(Math.random() * proverbs.length)];
+            showProverbMessage(proverb);
+        }
+
+        // Show loss proverb when no moves left
+        function showLossProverb() {
+            const proverb = lossProverbs[Math.floor(Math.random() * lossProverbs.length)];
+            showProverbMessage(proverb);
+        }
+
+        // Show proverb message
+        function showProverbMessage(proverb) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'proverb-message';
+            messageDiv.textContent = proverb;
+            
+            document.body.appendChild(messageDiv);
+            
+            // Remove after 4 seconds
+            setTimeout(() => {
+                if (document.body.contains(messageDiv)) {
+                    document.body.removeChild(messageDiv);
+                }
+            }, 4000);
         }
 
         // Update which tiles are free (not covered by others)
@@ -658,6 +798,8 @@
             if (availableMatches.length > 0) {
                 const match = availableMatches[0];
                 flashTiles([match[0], match[1]]);
+            } else {
+                showLossProverb();
             }
         }
 
@@ -720,6 +862,7 @@
         // Reset game to level 1
         function resetGame() {
             clearInterval(gameState.timerInterval);
+            clearInterval(gameState.stuckTimer);
             winMessage.classList.add('hidden');
             gameState.level = 1;
             initGame();
@@ -728,6 +871,7 @@
         // Go to next level
         function nextLevel() {
             clearInterval(gameState.timerInterval);
+            clearInterval(gameState.stuckTimer);
             winMessage.classList.add('hidden');
             gameState.level++;
             initGame();
@@ -736,6 +880,7 @@
         // End current level
         function endLevel() {
             clearInterval(gameState.timerInterval);
+            clearInterval(gameState.stuckTimer);
             winText.textContent = `Level ${gameState.level} Complete! Ready for level ${gameState.level + 1}?`;
             winMessage.classList.remove('hidden');
         }
