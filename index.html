@@ -62,6 +62,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             min-height: 500px;
+            position: relative;
         }
         
         .info-panel {
@@ -141,14 +142,16 @@
         
         .mahjong-board {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
             justify-items: center;
+            position: relative;
+            min-height: 400px;
         }
         
         .tile {
-            width: 60px;
-            height: 80px;
+            width: 50px;
+            height: 65px;
             background: linear-gradient(145deg, #2c3e50, #1a252f);
             border-radius: 6px;
             display: flex;
@@ -157,8 +160,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #f9a826;
+            position: absolute;
+            border: 2px solid #1a2a3a;
         }
         
         .tile:hover {
@@ -175,6 +180,11 @@
         .tile.matched {
             visibility: hidden;
         }
+        
+        .tile.level-1 { z-index: 10; }
+        .tile.level-2 { z-index: 20; }
+        .tile.level-3 { z-index: 30; }
+        .tile.level-4 { z-index: 40; }
         
         .instructions {
             background: rgba(13, 27, 42, 0.8);
@@ -239,19 +249,33 @@
             display: none;
         }
         
+        .level-indicator {
+            background: rgba(26, 42, 58, 0.6);
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .level-text {
+            font-size: 1.1rem;
+            color: #f9a826;
+            font-weight: bold;
+        }
+        
         @media (max-width: 768px) {
             .game-area {
                 grid-template-columns: 1fr;
             }
             
             .mahjong-board {
-                grid-template-columns: repeat(6, 1fr);
+                grid-template-columns: repeat(8, 1fr);
             }
             
             .tile {
-                width: 50px;
-                height: 70px;
-                font-size: 1.3rem;
+                width: 45px;
+                height: 60px;
+                font-size: 1.1rem;
             }
             
             h1 {
@@ -264,11 +288,14 @@
     <div class="container">
         <header>
             <h1>Adinkra Mahjong</h1>
-            <p class="subtitle">Match the symbols and discover their meanings</p>
+            <p class="subtitle">Match the symbols and discover their meanings - Gets harder each level!</p>
         </header>
         
         <div class="game-area">
             <div class="board-container">
+                <div class="level-indicator">
+                    <div class="level-text">Level: <span id="level">1</span> | Tiles: <span id="total-tiles">40</span></div>
+                </div>
                 <div class="mahjong-board" id="board"></div>
             </div>
             
@@ -303,22 +330,21 @@
         
         <div class="instructions">
             <h2>How to Play Adinkra Mahjong</h2>
-            <p>Match identical Adinkra symbols to clear the board and learn about Ghanaian cultural symbols.</p>
+            <p>Match identical Adinkra symbols to clear the board. The game gets harder each level with more stacked tiles!</p>
             
             <ul>
                 <li><strong>Match Tiles:</strong> Click on two identical symbols to remove them</li>
+                <li><strong>Stacked Tiles:</strong> Tiles are stacked in layers - only top tiles can be selected</li>
+                <li><strong>Level Progression:</strong> Each level adds more tiles and complex layouts</li>
                 <li><strong>Learn Meanings:</strong> Each symbol has cultural significance</li>
-                <li><strong>Win Condition:</strong> Clear all 40 tiles to win</li>
-                <li><strong>Use Hints:</strong> Get help finding matches</li>
             </ul>
-            
-            <p>Adinkra symbols are visual representations from the Akan people of Ghana, representing proverbs and philosophical concepts.</p>
         </div>
     </div>
     
     <div class="win-message hidden" id="win-message">
-        <h2>Congratulations!</h2>
-        <p>You've matched all the Adinkra symbols and learned about their cultural significance!</p>
+        <h2>Level Complete!</h2>
+        <p id="win-text">You've matched all the Adinkra symbols!</p>
+        <button id="next-level-btn">Next Level</button>
         <button id="play-again-btn">Play Again</button>
     </div>
 
@@ -342,10 +368,12 @@
             tiles: [],
             selectedTile: null,
             matches: 0,
-            remaining: 40,
+            remaining: 0,
             startTime: null,
             timerInterval: null,
-            elapsedTime: 0
+            elapsedTime: 0,
+            level: 1,
+            totalTiles: 40
         };
 
         // DOM elements
@@ -353,33 +381,46 @@
         const matchesElement = document.getElementById('matches');
         const remainingElement = document.getElementById('remaining');
         const timeElement = document.getElementById('time');
+        const levelElement = document.getElementById('level');
+        const totalTilesElement = document.getElementById('total-tiles');
         const symbolNameElement = document.getElementById('symbol-name');
         const symbolMeaningElement = document.getElementById('symbol-meaning');
         const hintButton = document.getElementById('hint-btn');
         const shuffleButton = document.getElementById('shuffle-btn');
         const resetButton = document.getElementById('reset-btn');
+        const nextLevelButton = document.getElementById('next-level-btn');
         const playAgainButton = document.getElementById('play-again-btn');
         const winMessage = document.getElementById('win-message');
+        const winText = document.getElementById('win-text');
 
         // Initialize the game
         function initGame() {
             createTiles();
             renderBoard();
             startTimer();
+            updateStats();
             
             // Add event listeners
             hintButton.addEventListener('click', provideHint);
             shuffleButton.addEventListener('click', shuffleTiles);
             resetButton.addEventListener('click', resetGame);
+            nextLevelButton.addEventListener('click', nextLevel);
             playAgainButton.addEventListener('click', resetGame);
         }
 
-        // Create tiles for the game
+        // Create tiles with stacking based on level
         function createTiles() {
             gameState.tiles = [];
             
-            // Create pairs of each symbol (4 of each for 40 total)
-            const symbols = [...adinkraSymbols, ...adinkraSymbols, ...adinkraSymbols, ...adinkraSymbols];
+            // Increase difficulty with level
+            const tilesPerSymbol = 4 + Math.floor(gameState.level / 2);
+            gameState.totalTiles = tilesPerSymbol * 10;
+            
+            // Create symbols array
+            const symbols = [];
+            for (let i = 0; i < tilesPerSymbol; i++) {
+                symbols.push(...adinkraSymbols);
+            }
             
             // Shuffle the symbols
             for (let i = symbols.length - 1; i > 0; i--) {
@@ -387,51 +428,94 @@
                 [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
             }
             
-            // Create tile objects
-            for (let i = 0; i < 40; i++) {
+            // Create tile objects with stacking levels
+            const positions = generateStackedPositions(gameState.totalTiles, gameState.level);
+            
+            for (let i = 0; i < gameState.totalTiles; i++) {
                 gameState.tiles.push({
                     id: i,
                     symbol: symbols[i],
                     matched: false,
-                    selected: false
+                    selected: false,
+                    x: positions[i].x,
+                    y: positions[i].y,
+                    level: positions[i].level,
+                    free: positions[i].free
                 });
             }
             
             gameState.matches = 0;
-            gameState.remaining = 40;
-            updateStats();
+            gameState.remaining = gameState.totalTiles;
         }
 
-        // Render the game board
+        // Generate stacked positions for tiles
+        function generateStackedPositions(totalTiles, level) {
+            const positions = [];
+            const maxLevels = Math.min(level + 1, 4); // Max 4 levels of stacking
+            const tilesPerLevel = Math.ceil(totalTiles / maxLevels);
+            
+            for (let level = 0; level < maxLevels; level++) {
+                const levelTiles = (level === maxLevels - 1) ? 
+                    totalTiles - (tilesPerLevel * (maxLevels - 1)) : tilesPerLevel;
+                
+                for (let i = 0; i < levelTiles; i++) {
+                    const row = Math.floor(i / 10);
+                    const col = i % 10;
+                    
+                    positions.push({
+                        x: col * 55 + (level * 3),
+                        y: row * 70 + (level * 5),
+                        level: level + 1,
+                        free: (level === maxLevels - 1) // Only top level tiles are initially free
+                    });
+                }
+            }
+            
+            return positions;
+        }
+
+        // Render the game board with stacked tiles
         function renderBoard() {
             boardElement.innerHTML = '';
             
             gameState.tiles.forEach(tile => {
-                const tileElement = document.createElement('div');
-                tileElement.className = 'tile';
-                if (tile.matched) {
-                    tileElement.classList.add('matched');
-                } else if (tile.selected) {
-                    tileElement.classList.add('selected');
+                if (!tile.matched) {
+                    const tileElement = document.createElement('div');
+                    tileElement.className = `tile level-${tile.level}`;
+                    if (tile.selected) {
+                        tileElement.classList.add('selected');
+                    }
+                    
+                    // Position the tile
+                    tileElement.style.left = `${tile.x}px`;
+                    tileElement.style.top = `${tile.y}px`;
+                    
+                    // Use Adinkra-inspired text symbols
+                    tileElement.textContent = getSymbolCharacter(tile.symbol.id);
+                    tileElement.addEventListener('click', () => selectTile(tile));
+                    
+                    // Only allow clicking on free tiles
+                    if (!tile.free) {
+                        tileElement.style.opacity = '0.7';
+                        tileElement.style.cursor = 'not-allowed';
+                        tileElement.onclick = null;
+                    }
+                    
+                    boardElement.appendChild(tileElement);
                 }
-                
-                // Use simple geometric symbols
-                tileElement.textContent = getSymbolCharacter(tile.symbol.id);
-                tileElement.addEventListener('click', () => selectTile(tile));
-                
-                boardElement.appendChild(tileElement);
             });
         }
 
-        // Get symbol character
+        // Get Adinkra-inspired text symbols
         function getSymbolCharacter(id) {
-            const symbols = ['●', '◆', '■', '▲', '★', '☀', '☽', '♠', '♣', '♥'];
+            // Using more cultural-looking text symbols
+            const symbols = ['◉', '◎', '⬡', '⬢', '▣', '▤', '✦', '✶', '⬭', '⬮'];
             return symbols[id % symbols.length];
         }
 
         // Handle tile selection
         function selectTile(tile) {
-            if (tile.matched || tile.selected) return;
+            if (tile.matched || tile.selected || !tile.free) return;
             
             if (!gameState.selectedTile) {
                 // First tile selection
@@ -448,8 +532,11 @@
                     gameState.matches++;
                     gameState.remaining -= 2;
                     
+                    // Update free tiles after match
+                    updateFreeTiles();
+                    
                     if (gameState.remaining === 0) {
-                        endGame();
+                        endLevel();
                     }
                 }
                 
@@ -459,6 +546,26 @@
                 renderBoard();
                 updateStats();
             }
+        }
+
+        // Update which tiles are free (not covered by others)
+        function updateFreeTiles() {
+            // Reset all tiles to not free
+            gameState.tiles.forEach(tile => {
+                if (!tile.matched) {
+                    tile.free = false;
+                }
+            });
+            
+            // Find the highest level with tiles
+            const maxLevel = Math.max(...gameState.tiles.filter(t => !t.matched).map(t => t.level));
+            
+            // Mark top-level tiles as free
+            gameState.tiles.forEach(tile => {
+                if (!tile.matched && tile.level === maxLevel) {
+                    tile.free = true;
+                }
+            });
         }
 
         // Show symbol information
@@ -471,6 +578,8 @@
         function updateStats() {
             matchesElement.textContent = gameState.matches;
             remainingElement.textContent = gameState.remaining;
+            levelElement.textContent = gameState.level;
+            totalTilesElement.textContent = gameState.totalTiles;
         }
 
         // Start the game timer
@@ -501,12 +610,12 @@
         // Find available matches
         function findAvailableMatches() {
             const matches = [];
-            const unmatchedTiles = gameState.tiles.filter(tile => !tile.matched);
+            const freeTiles = gameState.tiles.filter(tile => !tile.matched && tile.free);
             
-            for (let i = 0; i < unmatchedTiles.length; i++) {
-                for (let j = i + 1; j < unmatchedTiles.length; j++) {
-                    if (unmatchedTiles[i].symbol.id === unmatchedTiles[j].symbol.id) {
-                        matches.push([unmatchedTiles[i], unmatchedTiles[j]]);
+            for (let i = 0; i < freeTiles.length; i++) {
+                for (let j = i + 1; j < freeTiles.length; j++) {
+                    if (freeTiles[i].symbol.id === freeTiles[j].symbol.id) {
+                        matches.push([freeTiles[i], freeTiles[j]]);
                     }
                 }
             }
@@ -537,28 +646,46 @@
                 gameState.selectedTile = null;
             }
             
+            // Only shuffle unmatched tiles
             const unmatchedTiles = gameState.tiles.filter(tile => !tile.matched);
             const matchedTiles = gameState.tiles.filter(tile => tile.matched);
             
-            for (let i = unmatchedTiles.length - 1; i > 0; i--) {
+            // Shuffle symbols among unmatched tiles
+            const symbols = unmatchedTiles.map(tile => tile.symbol);
+            for (let i = symbols.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [unmatchedTiles[i], unmatchedTiles[j]] = [unmatchedTiles[j], unmatchedTiles[i]];
+                [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
             }
+            
+            // Assign shuffled symbols back to tiles
+            unmatchedTiles.forEach((tile, index) => {
+                tile.symbol = symbols[index];
+            });
             
             gameState.tiles = [...unmatchedTiles, ...matchedTiles];
             renderBoard();
         }
 
-        // Reset game
+        // Reset game to level 1
         function resetGame() {
             clearInterval(gameState.timerInterval);
             winMessage.classList.add('hidden');
+            gameState.level = 1;
             initGame();
         }
 
-        // End game
-        function endGame() {
+        // Go to next level
+        function nextLevel() {
             clearInterval(gameState.timerInterval);
+            winMessage.classList.add('hidden');
+            gameState.level++;
+            initGame();
+        }
+
+        // End current level
+        function endLevel() {
+            clearInterval(gameState.timerInterval);
+            winText.textContent = `Level ${gameState.level} Complete! Ready for level ${gameState.level + 1}?`;
             winMessage.classList.remove('hidden');
         }
 
