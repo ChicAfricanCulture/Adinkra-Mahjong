@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,22 +31,37 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(13, 27, 42, 0.8);
+            padding: 40px 20px;
+            background: 
+                linear-gradient(rgba(13, 27, 42, 0.9), rgba(13, 27, 42, 0.9)),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M50,180 Q75,150 100,180 Q125,210 150,180 Q175,150 200,180 Q225,210 250,180 Q275,150 300,180 Q325,210 350,180 L350,200 L50,200 Z'/%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M80,50 Q100,30 120,50 Q140,70 160,50 Q180,30 200,50 Q220,70 240,50 Q260,30 280,50 L280,70 L80,70 Z'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 400 200'%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M320,180 Q295,150 270,180 Q245,210 220,180 Q195,150 170,180 Q145,210 120,180 Q95,150 70,180 L70,200 L320,200 Z'/%3E%3Cpath fill='%23f9a826' opacity='0.1' d='M290,50 Q270,30 250,50 Q230,70 210,50 Q190,30 170,50 Q150,70 130,50 Q110,30 90,50 L90,70 L290,70 Z'/%3E%3C/svg%3E");
+            background-position: left center, right center;
+            background-repeat: no-repeat;
+            background-size: 150px, 150px;
             border-radius: 15px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: #f9a826;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: #b8c7d6;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .game-area {
@@ -61,7 +77,7 @@
             padding: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-height: 500px;
+            min-height: 600px;
             position: relative;
         }
         
@@ -142,39 +158,46 @@
         
         .mahjong-board {
             display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 4px;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
             justify-items: center;
             position: relative;
-            min-height: 400px;
+            min-height: 500px;
         }
         
         .tile {
-            width: 50px;
-            height: 65px;
+            width: 80px;
+            height: 100px;
             background: linear-gradient(145deg, #2c3e50, #1a252f);
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-            font-size: 1.3rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 2rem;
             color: #f9a826;
             position: absolute;
             border: 2px solid #1a2a3a;
+            font-weight: bold;
         }
         
         .tile:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
         }
         
         .tile.selected {
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(249, 168, 38, 0.7);
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px rgba(249, 168, 38, 0.7);
             border: 2px solid #f9a826;
+        }
+        
+        .tile.correct-match {
+            background: linear-gradient(145deg, #27ae60, #219653);
+            color: #ffffff;
+            border: 2px solid #2ecc71;
         }
         
         .tile.matched {
@@ -269,17 +292,22 @@
             }
             
             .mahjong-board {
-                grid-template-columns: repeat(8, 1fr);
+                grid-template-columns: repeat(6, 1fr);
             }
             
             .tile {
-                width: 45px;
-                height: 60px;
-                font-size: 1.1rem;
+                width: 70px;
+                height: 90px;
+                font-size: 1.8rem;
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            header {
+                background-size: 100px, 100px;
+                padding: 30px 20px;
             }
         }
     </style>
@@ -287,8 +315,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>Adinkra Mahjong</h1>
-            <p class="subtitle">Match the symbols and discover their meanings - Gets harder each level!</p>
+            <div class="header-content">
+                <h1>Adinkra Mahjong</h1>
+                <p class="subtitle">Match the symbols and discover their meanings - Gets harder each level!</p>
+            </div>
         </header>
         
         <div class="game-area">
@@ -334,6 +364,7 @@
             
             <ul>
                 <li><strong>Match Tiles:</strong> Click on two identical symbols to remove them</li>
+                <li><strong>Green Highlight:</strong> Correct matches turn green</li>
                 <li><strong>Stacked Tiles:</strong> Tiles are stacked in layers - only top tiles can be selected</li>
                 <li><strong>Level Progression:</strong> Each level adds more tiles and complex layouts</li>
                 <li><strong>Learn Meanings:</strong> Each symbol has cultural significance</li>
@@ -437,6 +468,7 @@
                     symbol: symbols[i],
                     matched: false,
                     selected: false,
+                    correctMatch: false,
                     x: positions[i].x,
                     y: positions[i].y,
                     level: positions[i].level,
@@ -451,7 +483,7 @@
         // Generate stacked positions for tiles
         function generateStackedPositions(totalTiles, level) {
             const positions = [];
-            const maxLevels = Math.min(level + 1, 4); // Max 4 levels of stacking
+            const maxLevels = Math.min(level + 1, 4);
             const tilesPerLevel = Math.ceil(totalTiles / maxLevels);
             
             for (let level = 0; level < maxLevels; level++) {
@@ -459,14 +491,14 @@
                     totalTiles - (tilesPerLevel * (maxLevels - 1)) : tilesPerLevel;
                 
                 for (let i = 0; i < levelTiles; i++) {
-                    const row = Math.floor(i / 10);
-                    const col = i % 10;
+                    const row = Math.floor(i / 8);
+                    const col = i % 8;
                     
                     positions.push({
-                        x: col * 55 + (level * 3),
-                        y: row * 70 + (level * 5),
+                        x: col * 85 + (level * 4),
+                        y: row * 105 + (level * 6),
                         level: level + 1,
-                        free: (level === maxLevels - 1) // Only top level tiles are initially free
+                        free: (level === maxLevels - 1)
                     });
                 }
             }
@@ -482,15 +514,19 @@
                 if (!tile.matched) {
                     const tileElement = document.createElement('div');
                     tileElement.className = `tile level-${tile.level}`;
+                    
                     if (tile.selected) {
                         tileElement.classList.add('selected');
+                    }
+                    if (tile.correctMatch) {
+                        tileElement.classList.add('correct-match');
                     }
                     
                     // Position the tile
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Use Adinkra-inspired text symbols
+                    // Use Adinkra-inspired symbols
                     tileElement.textContent = getSymbolCharacter(tile.symbol.id);
                     tileElement.addEventListener('click', () => selectTile(tile));
                     
@@ -506,10 +542,20 @@
             });
         }
 
-        // Get Adinkra-inspired text symbols
+        // Get Adinkra-inspired symbols (more cultural patterns)
         function getSymbolCharacter(id) {
-            // Using more cultural-looking text symbols
-            const symbols = ['◉', '◎', '⬡', '⬢', '▣', '▤', '✦', '✶', '⬭', '⬮'];
+            const symbols = [
+                '◉', // Gye Nyame - circle representing God's supremacy
+                '◎', // Sankofa - stylized bird looking backward
+                '⬡', // Adinkrahene - hexagonal pattern
+                '⬢', // Dwennimmen - ram's horns
+                '▣', // Akoma - heart in square
+                '▤', // Nsoromma - star pattern
+                '✦', // Osram Ne Nsoromma - moon and star
+                '✶', // Akofena - crossed swords
+                '⬭', // Epa - handcuffs pattern
+                '⬮'  // Fihankra - circular compound
+            ];
             return symbols[id % symbols.length];
         }
 
@@ -526,7 +572,9 @@
             } else {
                 // Second tile selection - check for match
                 if (gameState.selectedTile.symbol.id === tile.symbol.id) {
-                    // Match found
+                    // Match found - mark as correct match
+                    gameState.selectedTile.correctMatch = true;
+                    tile.correctMatch = true;
                     gameState.selectedTile.matched = true;
                     tile.matched = true;
                     gameState.matches++;
@@ -535,15 +583,21 @@
                     // Update free tiles after match
                     updateFreeTiles();
                     
-                    if (gameState.remaining === 0) {
-                        endLevel();
-                    }
+                    // Show correct match briefly before hiding
+                    renderBoard();
+                    setTimeout(() => {
+                        if (gameState.remaining === 0) {
+                            endLevel();
+                        }
+                        renderBoard();
+                    }, 500);
+                    
+                } else {
+                    // No match - reset selection
+                    gameState.selectedTile.selected = false;
                 }
                 
-                // Reset selection
-                gameState.selectedTile.selected = false;
                 gameState.selectedTile = null;
-                renderBoard();
                 updateStats();
             }
         }
@@ -646,18 +700,15 @@
                 gameState.selectedTile = null;
             }
             
-            // Only shuffle unmatched tiles
             const unmatchedTiles = gameState.tiles.filter(tile => !tile.matched);
             const matchedTiles = gameState.tiles.filter(tile => tile.matched);
             
-            // Shuffle symbols among unmatched tiles
             const symbols = unmatchedTiles.map(tile => tile.symbol);
             for (let i = symbols.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
             }
             
-            // Assign shuffled symbols back to tiles
             unmatchedTiles.forEach((tile, index) => {
                 tile.symbol = symbols[index];
             });
