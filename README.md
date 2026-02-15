@@ -36,15 +36,11 @@ Adinkra Mahjong is an educational puzzle game that introduces players to traditi
 - Dwennimmen - "Ram's horns"
 - Akoma - "The heart"
 - Nsoromma - "Child of the heavens"
-- Osram Ne Nsoromma - "The moon and the star"
+- Odo Nnyew Fie Kwan - "Eternal Love and Devotion"
 - Akofena - "Sword of war"
 - Epa - "Handcuffs"
-- Fihankra - "Circle of house"
+- Duafe - "Patience, love, and care"
 
-## Setup
-1. Upload `index.html` to GitHub
-2. Enable GitHub Pages in repository settings
-3. Visit your GitHub Pages URL to play
 
 ## Cultural Note
 Adinkra symbols are visual representations from the Akan people of Ghana, representing proverbs, historical events, and philosophical concepts.
