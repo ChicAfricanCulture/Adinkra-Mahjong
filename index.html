@@ -13,22 +13,24 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-    .archive-link {
-  text-align: center;
-  margin: 0.5rem 0 1.5rem;
-  font-size: 1rem;
-  color: #6a5f52;
-}
+        
+        .archive-link {
+            text-align: center;
+            margin: 0.5rem 0 1.5rem;
+            font-size: 1rem;
+            color: #6a5f52;
+        }
 
-.archive-link a {
-  color: #c48b36;
-  text-decoration: none;
-  font-weight: 500;
-}
+        .archive-link a {
+            color: #c48b36;
+            text-decoration: none;
+            font-weight: 500;
+        }
 
-.archive-link a:hover {
-  text-decoration: underline;
-}    
+        .archive-link a:hover {
+            text-decoration: underline;
+        }    
+        
         body {
             background: linear-gradient(135deg, #1a2a3a, #0d1b2a);
             color: #e0e0e0;
@@ -190,11 +192,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            font-size: 2.5rem;
-            color: #f9a826;
             position: absolute;
             border: 2px solid #1a2a3a;
-            font-family: 'Noto Sans Adlam', sans-serif;
+        }
+        
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 8px;
         }
         
         .tile:hover {
@@ -210,7 +216,6 @@
         
         .tile.correct-match {
             background: linear-gradient(145deg, #27ae60, #219653);
-            color: #ffffff;
             border: 2px solid #2ecc71;
         }
         
@@ -341,7 +346,6 @@
             .tile {
                 width: 70px;
                 height: 90px;
-                font-size: 2rem;
             }
             
             h1 {
@@ -357,16 +361,18 @@
 </head>
 <body>
     <div class="container">
-      <header>
-    <div class="header-content">
-        <h1>Adinkra Mahjong</h1>
-        <p class="subtitle">Match the tiles and learn the meanings behind Adinkra-inspired symbols.</p>
-    </div>
-</header>
+        <header>
+            <div class="header-content">
+                <h1>Adinkra Mahjong</h1>
+                <p class="subtitle">Match the tiles and learn the meanings behind Adinkra symbols.</p>
+            </div>
+        </header>
+        
         <p class="archive-link">
-  Part of the <strong>African Foodways</strong> project. 
-  Explore the <a href="https://chicafricanculture.github.io/african-foodways-data/">main archive, field notes, and more here</a>.
-</p>
+            Part of the <strong>African Foodways</strong> project. 
+            Explore the <a href="https://chicafricanculture.github.io/african-foodways-data/">main archive, field notes, and more here</a>.
+        </p>
+        
         <div class="game-area">
             <div class="board-container">
                 <div class="level-indicator">
@@ -446,67 +452,77 @@
             "A bird that flies off the earth and lands on an anthill is still on the ground. - Igbo Proverb"
         ];
 
-        // Authentic Adinkra symbols using Unicode characters and special fonts
+        // Authentic Adinkra symbols with your actual images
         const adinkraSymbols = [
             { 
                 id: 1, 
                 name: "Gye Nyame", 
                 meaning: "Except for God. Symbol of the supremacy of God, representing the belief in a supreme being.",
-                symbol: "◉" // Using geometric representation
+                symbol: "gye-nyame",
+                imageFile: "Gye Nyame.jpg"
             },
             { 
                 id: 2, 
                 name: "Sankofa", 
                 meaning: "Go back and fetch it. Symbol of learning from the past, wisdom, and understanding history.",
-                symbol: "↶" // Stylized bird looking backward
+                symbol: "sankofa",
+                imageFile: "Sankofa.png"
             },
             { 
                 id: 3, 
                 name: "Adinkrahene", 
                 meaning: "King of the Adinkra symbols. Symbol of greatness, charisma, and leadership.",
-                symbol: "⬢" // Chief's pattern
+                symbol: "adinkrahene",
+                imageFile: "Adinkrahene.png"
             },
             { 
                 id: 4, 
                 name: "Dwennimmen", 
                 meaning: "Ram's horns. Symbol of humility together with strength, representing that even the strong need to be humble.",
-                symbol: "ᛯ" // Ram's horns representation
+                symbol: "dwennimmen",
+                imageFile: "Dwennimmen.jpg"
             },
             { 
                 id: 5, 
                 name: "Akoma", 
                 meaning: "The heart. Symbol of patience, tolerance, faithfulness, and love.",
-                symbol: "♡" // Heart symbol
+                symbol: "akoma",
+                imageFile: "Akoma.jpg"
             },
             { 
                 id: 6, 
                 name: "Nsoromma", 
                 meaning: "Child of the heavens/star. Symbol of faith and the belief that God is the father who watches over all people.",
-                symbol: "★" // Star
+                symbol: "nsoromma",
+                imageFile: "Nsoromma.jpg"
             },
             { 
                 id: 7, 
-                name: "Osram Ne Nsoromma", 
-                meaning: "The moon and the star. Symbol of love, faithfulness, and harmony between male and female principles.",
-                symbol: "☪" // Moon and star
+                name: "Odo Nnyew Fie Kwan", 
+                meaning: "Eternal Love and Devotion. Symbol of love, faithfulness, and commitment.",
+                symbol: "odo-nnyew",
+                imageFile: "love.jpg"
             },
             { 
                 id: 8, 
                 name: "Akofena", 
                 meaning: "Sword of war. Symbol of courage, valor, and heroism. It represents state authority and the legitimacy of power.",
-                symbol: "⚔" // Crossed swords
+                symbol: "akofena",
+                imageFile: "Akofena.png"
             },
             { 
                 id: 9, 
                 name: "Epa", 
                 meaning: "Handcuffs. Symbol of law and justice, but also a reminder of the brutality of slavery and captivity.",
-                symbol: "⛓" // Chains
+                symbol: "epa",
+                imageFile: "Epa.jpg"
             },
             { 
                 id: 10, 
-                name: "Fihankra", 
-                meaning: "Circle of house/compound. Symbol of security, safety, and brotherhood. It represents the importance of family and community.",
-                symbol: "◯" // Circle representing compound
+                name: "Duafe", 
+                meaning: "Patience, love, and care. Symbol of feminine qualities and good grooming.",
+                symbol: "duafe",
+                imageFile: "Duafe.png"
             }
         ];
 
@@ -650,8 +666,24 @@
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Use actual Adinkra symbols
-                    tileElement.textContent = tile.symbol.symbol;
+                    // Clear any text content
+                    tileElement.textContent = '';
+                    
+                    // Check if this symbol has an image file
+                    if (tile.symbol.imageFile) {
+                        // Create an image element
+                        const img = document.createElement('img');
+                        img.src = `images/${tile.symbol.imageFile}`;
+                        img.alt = tile.symbol.name;
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.objectFit = 'contain';
+                        tileElement.appendChild(img);
+                    } else {
+                        // Fallback to Unicode symbol (just in case)
+                        tileElement.textContent = tile.symbol.symbol || '◉';
+                    }
+                    
                     tileElement.addEventListener('click', () => selectTile(tile));
                     
                     // Only allow clicking on free tiles
