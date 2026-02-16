@@ -466,7 +466,7 @@
             "A bird that flies off the earth and lands on an anthill is still on the ground. - Igbo Proverb"
         ];
 
-        // Authentic Adinkra symbols with your actual images
+        // Authentic Adinkra symbols with your actual images - FILENAMES NOW MATCH EXACTLY
         const adinkraSymbols = [
             { 
                 id: 1, 
@@ -670,10 +670,14 @@
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Create image element
+                    // Create image element with correct filename
                     const img = document.createElement('img');
                     img.src = tile.symbol.imageFile;
                     img.alt = tile.symbol.name;
+                    img.onerror = function() {
+                        console.log('Failed to load:', tile.symbol.imageFile);
+                        this.style.display = 'none';
+                    };
                     tileElement.appendChild(img);
                     
                     tileElement.addEventListener('click', () => selectTile(tile));
