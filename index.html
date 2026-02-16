@@ -372,7 +372,7 @@
         <header>
             <div class="header-content">
                 <h1>Adinkra Mahjong</h1>
-                <p class="subtitle">Match the tiles and learn the true meanings behind Adinkra symbols.</p>
+                <p class="subtitle">Match the tiles and learn the meanings behind Adinkra symbols.</p>
             </div>
         </header>
         
@@ -610,8 +610,27 @@
                     x: positions[i].x,
                     y: positions[i].y,
                     level: positions[i].level,
-                    free: positions[i].free
+                    free: false
                 });
+            }
+            
+            // FIX 1: Update free tiles immediately after creation
+            updateFreeTiles();
+            
+            // FIX 2: If no matches available, shuffle until there is at least one
+            let attempts = 0;
+            while (findAvailableMatches().length === 0 && attempts < 10) {
+                // Reshuffle unmatched tiles
+                const unmatchedTiles = gameState.tiles.filter(t => !t.matched);
+                const symbols = unmatchedTiles.map(t => t.symbol);
+                for (let i = symbols.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
+                }
+                unmatchedTiles.forEach((tile, index) => {
+                    tile.symbol = symbols[index];
+                });
+                attempts++;
             }
             
             gameState.matches = 0;
@@ -635,13 +654,42 @@
                     positions.push({
                         x: col * 85 + (level * 4),
                         y: row * 105 + (level * 6),
-                        level: level + 1,
-                        free: (level === maxLevels - 1)
+                        level: level + 1
                     });
                 }
             }
             
             return positions;
+        }
+
+        // FIXED: Real Mahjong free-tile detection
+        function updateFreeTiles() {
+            const active = gameState.tiles.filter(t => !t.matched);
+            
+            // Start with all active tiles as free
+            active.forEach(t => t.free = true);
+            
+            // Check if a tile is covered by another tile
+            const isCovered = (tile) => {
+                return active.some(other => {
+                    if (other.id === tile.id) return false;
+                    if (other.level <= tile.level) return false;
+                    
+                    // Check if other tile overlaps this one
+                    const dx = Math.abs(tile.x - other.x);
+                    const dy = Math.abs(tile.y - other.y);
+                    
+                    // If other tile is above and overlaps significantly, this tile is covered
+                    return dx < 75 && dy < 95;
+                });
+            };
+            
+            // Mark covered tiles as not free
+            active.forEach(tile => {
+                if (isCovered(tile)) {
+                    tile.free = false;
+                }
+            });
         }
 
         // Render the game board with stacked tiles
@@ -767,26 +815,6 @@
                     document.body.removeChild(messageDiv);
                 }
             }, 4000);
-        }
-
-        // Update which tiles are free (not covered by others)
-        function updateFreeTiles() {
-            // Reset all tiles to not free
-            gameState.tiles.forEach(tile => {
-                if (!tile.matched) {
-                    tile.free = false;
-                }
-            });
-            
-            // Find the highest level with tiles
-            const maxLevel = Math.max(...gameState.tiles.filter(t => !t.matched).map(t => t.level));
-            
-            // Mark top-level tiles as free
-            gameState.tiles.forEach(tile => {
-                if (!tile.matched && tile.level === maxLevel) {
-                    tile.free = true;
-                }
-            });
         }
 
         // Show symbol information
