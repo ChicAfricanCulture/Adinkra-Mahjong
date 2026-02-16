@@ -7,7 +7,7 @@
     
     <!-- Social Media Meta Tags -->
     <meta property="og:title" content="Adinkra Mahjong - Cultural Matching Game">
-    <meta property="og:description" content="Match authentic Adinkra symbols and discover their meanings. A game of memory and culture.">
+    <meta property="og:description" content="Match Adinkra symbols and discover their meanings. A game of memory and culture.">
     <meta property="og:image" content="https://raw.githubusercontent.com/ChicAfricanCulture/Adinkra-Mahjong/main/Adinkra-Mahjong.png">
     <meta property="og:url" content="https://chicafricanculture.github.io/Adinkra-Mahjong/">
     <meta property="og:type" content="website">
@@ -203,22 +203,15 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 10px rgba(0,0,0,0.4), inset 0 3px 6px rgba(255,215,0,0.3);
             position: absolute;
-        }
-        
-        .tile img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            filter: brightness(1.1) contrast(1.2) drop-shadow(3px 3px 5px rgba(0,0,0,0.6));
+            font-size: 2.5rem;
+            color: #1a2a3a;
+            font-family: 'Noto Sans Adlam', sans-serif;
+            text-shadow: 2px 2px 4px rgba(255,215,0,0.3);
         }
         
         .tile:hover {
             transform: scale(1.08) translateY(-3px);
             box-shadow: 0 8px 16px rgba(0,0,0,0.5), inset 0 3px 6px rgba(255,215,0,0.4);
-        }
-        
-        .tile:hover img {
-            filter: brightness(1.3) contrast(1.3) drop-shadow(4px 4px 6px rgba(0,0,0,0.7));
         }
         
         .tile.selected {
@@ -360,6 +353,7 @@
             .tile {
                 width: 70px;
                 height: 90px;
+                font-size: 2rem;
             }
             
             h1 {
@@ -426,7 +420,7 @@
         
         <div class="instructions">
             <h2>How to Play Adinkra Mahjong</h2>
-            <p>Match identical authentic Adinkra symbols to clear the board. The game gets harder each level with more stacked tiles!</p>
+            <p>Match identical Adinkra symbols to clear the board. The game gets harder each level with more stacked tiles!</p>
             
             <ul>
                 <li><strong>Match Tiles:</strong> Click on two identical Adinkra symbols to remove them</li>
@@ -466,67 +460,67 @@
             "A bird that flies off the earth and lands on an anthill is still on the ground. - Igbo Proverb"
         ];
 
-        // Authentic Adinkra symbols with your actual images - FILENAMES NOW MATCH EXACTLY
+        // Adinkra symbols with Unicode representations
         const adinkraSymbols = [
             { 
                 id: 1, 
                 name: "Gye Nyame", 
                 meaning: "Except for God. Symbol of the supremacy of God, representing the belief in a supreme being.",
-                imageFile: "Gye-Nyame.png"
+                symbol: "◉"
             },
             { 
                 id: 2, 
                 name: "Sankofa", 
                 meaning: "Go back and fetch it. Symbol of learning from the past, wisdom, and understanding history.",
-                imageFile: "Sankofa-egg.png"
+                symbol: "↶"
             },
             { 
                 id: 3, 
                 name: "Adinkrahene", 
                 meaning: "King of the Adinkra symbols. Symbol of greatness, charisma, and leadership.",
-                imageFile: "Adinkrahene-above.png"
+                symbol: "⬢"
             },
             { 
                 id: 4, 
                 name: "Dwennimmen", 
                 meaning: "Ram's horns. Symbol of humility together with strength, representing that even the strong need to be humble.",
-                imageFile: "Dwennimmen-a.png"
+                symbol: "ᛯ"
             },
             { 
                 id: 5, 
                 name: "Akoma", 
                 meaning: "The heart. Symbol of patience, tolerance, faithfulness, and love.",
-                imageFile: "Akoma-d.png"
+                symbol: "♡"
             },
             { 
                 id: 6, 
                 name: "Nsoromma", 
                 meaning: "Child of the heavens/star. Symbol of faith and the belief that God is the father who watches over all people.",
-                imageFile: "Nsoromma-9.png"
+                symbol: "★"
             },
             { 
                 id: 7, 
                 name: "Odo Nnyew Fie Kwan", 
                 meaning: "Eternal Love and Devotion. Symbol of love, faithfulness, and commitment.",
-                imageFile: "love-will.png"
+                symbol: "☪"
             },
             { 
                 id: 8, 
                 name: "Akofena", 
                 meaning: "Sword of war. Symbol of courage, valor, and heroism. It represents state authority and the legitimacy of power.",
-                imageFile: "Akofena-7.png"
+                symbol: "⚔"
             },
             { 
                 id: 9, 
                 name: "Epa", 
                 meaning: "Handcuffs. Symbol of law and justice, but also a reminder of the brutality of slavery and captivity.",
-                imageFile: "Epa-s.png"
+                symbol: "⛓"
             },
             { 
                 id: 10, 
                 name: "Duafe", 
                 meaning: "Patience, love, and care. Symbol of feminine qualities and good grooming.",
-                imageFile: "Duafe-beauty.png"
+                symbol: "◯"
             }
         ];
 
@@ -670,15 +664,8 @@
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Create image element with correct filename
-                    const img = document.createElement('img');
-                    img.src = tile.symbol.imageFile;
-                    img.alt = tile.symbol.name;
-                    img.onerror = function() {
-                        console.log('Failed to load:', tile.symbol.imageFile);
-                        this.style.display = 'none';
-                    };
-                    tileElement.appendChild(img);
+                    // Use text symbol
+                    tileElement.textContent = tile.symbol.symbol;
                     
                     tileElement.addEventListener('click', () => selectTile(tile));
                     
