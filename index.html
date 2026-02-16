@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adinkra Mahjong - Cultural Matching Game</title><!-- Social Media Meta Tags -->
-<meta property="og:title" content="Adinkra Mahjong - Cultural Matching Game">
-<meta property="og:description" content="Match authentic Adinkra symbols and discover their meanings. A game of memory and culture.">
-<meta property="og:image" content="https://github.com/ChicAfricanCulture/Adinkra-Mahjong/blob/main/images/Adinkra%20Mahjong.png">
-<meta property="og:url" content="https://chicafricanculture.github.io/Adinkra-Mahjong/">
-<meta property="og:type" content="website">
-
-<!-- Pinterest Specific (uses same og tags) -->
-<meta name="pinterest-rich-pin" content="true" />
+    <title>Adinkra Mahjong - Cultural Matching Game</title>
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Adinkra Mahjong - Cultural Matching Game">
+    <meta property="og:description" content="Match authentic Adinkra symbols and discover their meanings. A game of memory and culture.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/ChicAfricanCulture/Adinkra-Mahjong/main/Adinkra-Mahjong.png">
+    <meta property="og:url" content="https://chicafricanculture.github.io/Adinkra-Mahjong/">
+    <meta property="og:type" content="website">
+    <meta name="pinterest-rich-pin" content="true" />
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Adlam:wght@400;700&display=swap');
         
@@ -192,34 +193,38 @@
         .tile {
             width: 80px;
             height: 100px;
-            background: linear-gradient(145deg, #2c3e50, #1a252f);
-            border-radius: 8px;
+            background: linear-gradient(145deg, #d2b48c, #8b4513);
+            border: 3px solid #ffd700;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.4), inset 0 3px 6px rgba(255,215,0,0.3);
             position: absolute;
-            border: 2px solid #1a2a3a;
         }
         
         .tile img {
-            width: 100%;
-            height: 100%;
+            width: 90%;
+            height: 90%;
             object-fit: contain;
-            padding: 8px;
+            filter: brightness(1.1) contrast(1.2) drop-shadow(3px 3px 5px rgba(0,0,0,0.6));
         }
         
         .tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5), inset 0 3px 6px rgba(255,215,0,0.4);
+        }
+        
+        .tile:hover img {
+            filter: brightness(1.3) contrast(1.3) drop-shadow(4px 4px 6px rgba(0,0,0,0.7));
         }
         
         .tile.selected {
             transform: translateY(-8px);
-            box-shadow: 0 0 20px rgba(249, 168, 38, 0.7);
-            border: 2px solid #f9a826;
+            box-shadow: 0 0 20px #ff8c00;
+            border-color: #ff8c00;
         }
         
         .tile.correct-match {
@@ -228,7 +233,8 @@
         }
         
         .tile.matched {
-            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.6s ease;
         }
         
         .tile.level-1 { z-index: 10; }
@@ -466,71 +472,61 @@
                 id: 1, 
                 name: "Gye Nyame", 
                 meaning: "Except for God. Symbol of the supremacy of God, representing the belief in a supreme being.",
-                symbol: "gye-nyame",
-                imageFile: "Gye Nyame.jpg"
+                imageFile: "Gye-Nyame.png"
             },
             { 
                 id: 2, 
                 name: "Sankofa", 
                 meaning: "Go back and fetch it. Symbol of learning from the past, wisdom, and understanding history.",
-                symbol: "sankofa",
-                imageFile: "Sankofa.png"
+                imageFile: "Sankofa-egg.png"
             },
             { 
                 id: 3, 
                 name: "Adinkrahene", 
                 meaning: "King of the Adinkra symbols. Symbol of greatness, charisma, and leadership.",
-                symbol: "adinkrahene",
-                imageFile: "Adinkrahene.png"
+                imageFile: "Adinkrahene-above.png"
             },
             { 
                 id: 4, 
                 name: "Dwennimmen", 
                 meaning: "Ram's horns. Symbol of humility together with strength, representing that even the strong need to be humble.",
-                symbol: "dwennimmen",
-                imageFile: "Dwennimmen.jpg"
+                imageFile: "Dwennimmen-a.png"
             },
             { 
                 id: 5, 
                 name: "Akoma", 
                 meaning: "The heart. Symbol of patience, tolerance, faithfulness, and love.",
-                symbol: "akoma",
-                imageFile: "Akoma.jpg"
+                imageFile: "Akoma-d.png"
             },
             { 
                 id: 6, 
                 name: "Nsoromma", 
                 meaning: "Child of the heavens/star. Symbol of faith and the belief that God is the father who watches over all people.",
-                symbol: "nsoromma",
-                imageFile: "Nsoromma.jpg"
+                imageFile: "Nsoromma-9.png"
             },
             { 
                 id: 7, 
                 name: "Odo Nnyew Fie Kwan", 
                 meaning: "Eternal Love and Devotion. Symbol of love, faithfulness, and commitment.",
-                symbol: "odo-nnyew",
-                imageFile: "love.jpg"
+                imageFile: "love-will.png"
             },
             { 
                 id: 8, 
                 name: "Akofena", 
                 meaning: "Sword of war. Symbol of courage, valor, and heroism. It represents state authority and the legitimacy of power.",
-                symbol: "akofena",
-                imageFile: "Akofena.png"
+                imageFile: "Akofena-7.png"
             },
             { 
                 id: 9, 
                 name: "Epa", 
                 meaning: "Handcuffs. Symbol of law and justice, but also a reminder of the brutality of slavery and captivity.",
-                symbol: "epa",
-                imageFile: "Epa.jpg"
+                imageFile: "Epa-s.png"
             },
             { 
                 id: 10, 
                 name: "Duafe", 
                 meaning: "Patience, love, and care. Symbol of feminine qualities and good grooming.",
-                symbol: "duafe",
-                imageFile: "Duafe.png"
+                imageFile: "Duafe-beauty.png"
             }
         ];
 
@@ -674,23 +670,11 @@
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Clear any text content
-                    tileElement.textContent = '';
-                    
-                    // Check if this symbol has an image file
-                    if (tile.symbol.imageFile) {
-                        // Create an image element
-                        const img = document.createElement('img');
-                        img.src = `images/${tile.symbol.imageFile}`;
-                        img.alt = tile.symbol.name;
-                        img.style.width = '100%';
-                        img.style.height = '100%';
-                        img.style.objectFit = 'contain';
-                        tileElement.appendChild(img);
-                    } else {
-                        // Fallback to Unicode symbol (just in case)
-                        tileElement.textContent = tile.symbol.symbol || '◉';
-                    }
+                    // Create image element
+                    const img = document.createElement('img');
+                    img.src = tile.symbol.imageFile;
+                    img.alt = tile.symbol.name;
+                    tileElement.appendChild(img);
                     
                     tileElement.addEventListener('click', () => selectTile(tile));
                     
@@ -723,9 +707,7 @@
             } else {
                 // Second tile selection - check for match
                 if (gameState.selectedTile.symbol.id === tile.symbol.id) {
-                    // Match found - mark as correct match
-                    gameState.selectedTile.correctMatch = true;
-                    tile.correctMatch = true;
+                    // Match found
                     gameState.selectedTile.matched = true;
                     tile.matched = true;
                     gameState.matches++;
@@ -734,19 +716,16 @@
                     // Update free tiles after match
                     updateFreeTiles();
                     
-                    // Show correct match briefly before hiding
                     renderBoard();
-                    setTimeout(() => {
-                        if (gameState.remaining === 0) {
-                            endLevel();
-                        } else {
-                            // Check if no moves left
-                            if (findAvailableMatches().length === 0) {
-                                showLossProverb();
-                            }
+                    
+                    if (gameState.remaining === 0) {
+                        endLevel();
+                    } else {
+                        // Check if no moves left
+                        if (findAvailableMatches().length === 0) {
+                            showLossProverb();
                         }
-                        renderBoard();
-                    }, 500);
+                    }
                     
                 } else {
                     // No match - reset selection
@@ -792,7 +771,6 @@
             
             document.body.appendChild(messageDiv);
             
-            // Remove after 4 seconds
             setTimeout(() => {
                 if (document.body.contains(messageDiv)) {
                     document.body.removeChild(messageDiv);
