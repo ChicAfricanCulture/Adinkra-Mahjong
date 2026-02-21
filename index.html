@@ -203,10 +203,8 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 10px rgba(0,0,0,0.4), inset 0 3px 6px rgba(255,215,0,0.3);
             position: absolute;
-            font-size: 2.5rem;
-            color: #1a2a3a;
-            font-family: 'Noto Sans Adlam', sans-serif;
-            text-shadow: 2px 2px 4px rgba(255,215,0,0.3);
+            overflow: hidden;
+            padding: 5px;
         }
         
         .tile:hover {
@@ -228,6 +226,13 @@
         .tile.matched {
             opacity: 0;
             transition: opacity 0.6s ease;
+        }
+        
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         
         .tile.level-1 { z-index: 10; }
@@ -353,7 +358,6 @@
             .tile {
                 width: 70px;
                 height: 90px;
-                font-size: 2rem;
             }
             
             h1 {
@@ -460,67 +464,67 @@
             "A bird that flies off the earth and lands on an anthill is still on the ground. - Igbo Proverb"
         ];
 
-        // Adinkra symbols with Unicode representations
+        // Adinkra symbols with image file names - UPDATED to match your files
         const adinkraSymbols = [
             { 
                 id: 1, 
                 name: "Gye Nyame", 
                 meaning: "Except for God. Symbol of the supremacy of God, representing the belief in a supreme being.",
-                symbol: "◉"
+                imageFile: "Gye-Nyame.png"
             },
             { 
                 id: 2, 
                 name: "Sankofa", 
                 meaning: "Go back and fetch it. Symbol of learning from the past, wisdom, and understanding history.",
-                symbol: "↶"
+                imageFile: "Sankofa-egg.png"
             },
             { 
                 id: 3, 
                 name: "Adinkrahene", 
                 meaning: "King of the Adinkra symbols. Symbol of greatness, charisma, and leadership.",
-                symbol: "⬢"
+                imageFile: "Adinkrahene-above.png"
             },
             { 
                 id: 4, 
                 name: "Dwennimmen", 
                 meaning: "Ram's horns. Symbol of humility together with strength, representing that even the strong need to be humble.",
-                symbol: "ᛯ"
+                imageFile: "Dwennimmen-a.png"
             },
             { 
                 id: 5, 
                 name: "Akoma", 
                 meaning: "The heart. Symbol of patience, tolerance, faithfulness, and love.",
-                symbol: "♡"
+                imageFile: "Akoma-d.png"
             },
             { 
                 id: 6, 
                 name: "Nsoromma", 
                 meaning: "Child of the heavens/star. Symbol of faith and the belief that God is the father who watches over all people.",
-                symbol: "★"
+                imageFile: "Nsoromma-9.png"
             },
             { 
                 id: 7, 
-                name: "Odo Nnyew Fie Kwan", 
-                meaning: "Eternal Love and Devotion. Symbol of love, faithfulness, and commitment.",
-                symbol: "☪"
+                name: "Akofena", 
+                meaning: "Sword of war. Symbol of courage, valor, and heroism. It represents state authority and the legitimacy of power.",
+                imageFile: "Akofena-7.png"
             },
             { 
                 id: 8, 
-                name: "Akofena", 
-                meaning: "Sword of war. Symbol of courage, valor, and heroism. It represents state authority and the legitimacy of power.",
-                symbol: "⚔"
+                name: "Epa", 
+                meaning: "Handcuffs. Symbol of law and justice, but also a reminder of the brutality of slavery and captivity.",
+                imageFile: "Epa-s.png"
             },
             { 
                 id: 9, 
-                name: "Epa", 
-                meaning: "Handcuffs. Symbol of law and justice, but also a reminder of the brutality of slavery and captivity.",
-                symbol: "⛓"
+                name: "Duafe", 
+                meaning: "Patience, love, and care. Symbol of feminine qualities and good grooming.",
+                imageFile: "Duafe-beauty.png"
             },
             { 
                 id: 10, 
-                name: "Duafe", 
-                meaning: "Patience, love, and care. Symbol of feminine qualities and good grooming.",
-                symbol: "◯"
+                name: "Odo Nnyew Fie Kwan", 
+                meaning: "Eternal Love and Devotion. Symbol of love, faithfulness, and commitment.",
+                imageFile: "love-will.png"
             }
         ];
 
@@ -614,13 +618,11 @@
                 });
             }
             
-            // FIX 1: Update free tiles immediately after creation
             updateFreeTiles();
             
-            // FIX 2: If no matches available, shuffle until there is at least one
+            // If no matches available, shuffle until there is at least one
             let attempts = 0;
             while (findAvailableMatches().length === 0 && attempts < 10) {
-                // Reshuffle unmatched tiles
                 const unmatchedTiles = gameState.tiles.filter(t => !t.matched);
                 const symbols = unmatchedTiles.map(t => t.symbol);
                 for (let i = symbols.length - 1; i > 0; i--) {
@@ -662,29 +664,24 @@
             return positions;
         }
 
-        // FIXED: Real Mahjong free-tile detection
+        // Real Mahjong free-tile detection
         function updateFreeTiles() {
             const active = gameState.tiles.filter(t => !t.matched);
             
-            // Start with all active tiles as free
             active.forEach(t => t.free = true);
             
-            // Check if a tile is covered by another tile
             const isCovered = (tile) => {
                 return active.some(other => {
                     if (other.id === tile.id) return false;
                     if (other.level <= tile.level) return false;
                     
-                    // Check if other tile overlaps this one
                     const dx = Math.abs(tile.x - other.x);
                     const dy = Math.abs(tile.y - other.y);
                     
-                    // If other tile is above and overlaps significantly, this tile is covered
                     return dx < 75 && dy < 95;
                 });
             };
             
-            // Mark covered tiles as not free
             active.forEach(tile => {
                 if (isCovered(tile)) {
                     tile.free = false;
@@ -692,7 +689,7 @@
             });
         }
 
-        // Render the game board with stacked tiles
+        // Render the game board with stacked tiles - UPDATED to show images
         function renderBoard() {
             boardElement.innerHTML = '';
             
@@ -708,16 +705,17 @@
                         tileElement.classList.add('correct-match');
                     }
                     
-                    // Position the tile
                     tileElement.style.left = `${tile.x}px`;
                     tileElement.style.top = `${tile.y}px`;
                     
-                    // Use text symbol
-                    tileElement.textContent = tile.symbol.symbol;
+                    // Create image element for the tile
+                    const img = document.createElement('img');
+                    img.src = `images/${tile.symbol.imageFile}`;
+                    img.alt = tile.symbol.name;
+                    tileElement.appendChild(img);
                     
                     tileElement.addEventListener('click', () => selectTile(tile));
                     
-                    // Only allow clicking on free tiles
                     if (!tile.free) {
                         tileElement.style.opacity = '0.7';
                         tileElement.style.cursor = 'not-allowed';
@@ -733,7 +731,6 @@
         function selectTile(tile) {
             if (tile.matched || tile.selected || !tile.free) return;
             
-            // Update last move time
             gameState.lastMoveTime = new Date();
             gameState.proverbShown = false;
             
@@ -760,7 +757,6 @@
                     if (gameState.remaining === 0) {
                         endLevel();
                     } else {
-                        // Check if no moves left
                         if (findAvailableMatches().length === 0) {
                             showLossProverb();
                         }
