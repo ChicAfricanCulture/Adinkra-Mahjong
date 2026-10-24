@@ -1,54 +1,29 @@
 # Adinkra Mahjong
 
-A cultural matching game that combines traditional Mahjong gameplay with Ghanaian Adinkra symbols and their meanings.
+A calm tile-matching game with Adinkra symbols from Ghana. Each time you pick a tile, you can read what its symbol means.
 
-## Live Demo
-https://Adinkra-Mahjong.github.io/adinkra-mahjong/
+**▶ Play it here: [https://chicafricanculture.github.io/Adinkra-Mahjong/](https://chicafricanculture.github.io/Adinkra-Mahjong/)**
 
-## About
-Adinkra Mahjong is an educational puzzle game that introduces players to traditional Adinkra symbols from Ghanaian culture. Each symbol carries deep cultural meaning from Akan proverbs and philosophical ideas.
+A free game from [The African Gourmet](https://www.theafricangourmet.com/), made to help people learn about African food through play.
 
-## How to Play
-- **Goal**: Clear all tiles by matching identical Adinkra symbols
-- **Click** on two matching symbols to remove them
-- **Learn** about each symbol's meaning by clicking on tiles
-- **Use hints** if you get stuck
-- **Win** by matching all 40 tiles
+## How to play
 
-## Features
-- 10 different Adinkra symbols with cultural meanings
-- Timer and match tracking
-- Hint system
-- Shuffle functionality
-- Responsive design
-- No images or icons required
+- Click two matching, free tiles to clear them. Only the top tiles in a stack can be picked.
+- Click any tile to see the symbol's name and meaning.
+- Stuck? Use **Hint** to find a pair, or **Shuffle** to mix the tiles.
+- Clear the board to move to the next level. Each level adds more tiles.
 
-## Technology
-- HTML5
-- CSS3
-- JavaScript
-- GitHub Pages
+## The symbols
 
-## Symbols Included
-- Gye Nyame - "Except for God"
-- Sankofa - "Go back and fetch it" 
-- Adinkrahene - "King of Adinkra symbols"
-- Dwennimmen - "Ram's horns"
-- Akoma - "The heart"
-- Nsoromma - "Child of the heavens"
-- Odo Nnyew Fie Kwan - "Eternal Love and Devotion"
-- Akofena - "Sword of war"
-- Epa - "Handcuffs"
-- Duafe - "Patience, love, and care"
+Gye Nyame, Sankofa, Adinkrahene, Dwennimmen, Akoma, Nsoromma, Akofena, Epa, Duafe and Odo Nnyew Fie Kwan.
 
+## More from The African Gourmet
 
-## Cultural Note
-Adinkra symbols are visual representations from the Akan people of Ghana, representing proverbs, historical events, and philosophical concepts.
+- [More African food stories at The African Gourmet](https://www.theafricangourmet.com/)
+- [More games to play and learn](https://www.theafricangourmet.com/p/play-learn-african-food-games.html)
 
 ---
 
-Part of a series of cultural games celebrating African heritage.    <div class="footer">
-        <p>Maintained by <a href="https://www.theafricangourmet.com" style="color: #8B4513;">The African Gourmet</a> · Licensed under CC BY 4.0</p>
-        <p>Part of [SankofaKitchen](https://github.com/ChicAfricanCulture) — African foodways retrieved through play  
-[Visit my GitHub profile](https://github.com/ChicAfricanCulture) for more projects</p>
-    </div>
+Maintained by [The African Gourmet](https://www.theafricangourmet.com/).
+
+MIT License, see [LICENSE](LICENSE).
